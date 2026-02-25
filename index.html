@@ -1,80 +1,250 @@
-<!DOCTYPE html>
-<html lang="pt-BR">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Missão Peru</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <style>
-        .section { display: none; }
-        .active { display: block; }
-    </style>
-</head>
-<body class="bg-[#0A2540] text-white min-h-screen pb-24">
+import React, { useState } from 'react';
+import { Gamepad2, Heart, Star, Shield, BookOpen, Users, Sun, Cloud, Anchor, Crown, ArrowRight, Check } from 'lucide-react';
 
-    <div class="bg-gradient-to-b from-[#15803D] to-[#0A2540] py-10 text-center shadow-lg">
-        <img src="logo-missao-peru.png" alt="Logo" class="mx-auto w-32 h-32 rounded-full border-4 border-[#E8B923] mb-4">
-        <h1 class="text-2xl font-bold text-[#E8B923]">Missão Peru</h1>
-        <p class="text-sm text-gray-300">APOIO MENSAL 12 MESES</p>
-    </div>
+export default function App() {
+  const [selectedPlan, setSelectedPlan] = useState(null);
 
-    <div id="home" class="section active p-6 text-center">
-        <h2 class="text-[#E8B923] text-xl font-bold mb-4">Palavra do Dia</h2>
-        <div class="bg-white/10 p-8 rounded-2xl border-l-4 border-[#15803D] mb-6">
-            <p class="italic text-lg">"Ide por todo o mundo e pregai o evangelho..."</p>
-        </div><div id="oracao" class="section hidden p-6">
-    <h2 class="text-[#E8B923] text-2xl font-bold mb-6 text-center underline">Clamor por Tacna</h2>
-    <div class="space-y-4">
-        <div class="bg-white/5 p-4 rounded-xl border-l-4 border-[#15803D]">
-            <p class="font-bold text-[#E8B923]">1. Portas Abertas</p>
-            <p class="text-sm">Para que o povo Quéchua receba a mensagem com o coração aberto.</p>
-        </div>
-        <div class="bg-white/5 p-4 rounded-xl border-l-4 border-[#15803D]">
-            <p class="font-bold text-[#E8B923]">2. Provisão</p>
-            <p class="text-sm">Pelo sustento da base e dos novos missionários que chegarão.</p>
-        </div>
-        <div class="bg-white/5 p-4 rounded-xl border-l-4 border-[#15803D]">
-            <p class="font-bold text-[#E8B923]">3. Saúde e Proteção</p>
-            <p class="text-sm">Pela família missionária contra toda enfermidade e oposição.</p>
-        </div>
-    </div>
-    <button onclick="alert('Obrigado por interceder! Sua oração move os céus.')" class="mt-8 w-full border-2 border-[#E8B923] py-3 rounded-lg font-bold text-[#E8B923]">
-        EU OREI POR ESTES MOTIVOS
+  // Fonte estilizada para dar o aspecto de jogo retrô
+  const customStyles = `
+    @import url('https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600;700&family=VT323&display=swap');
+    
+    body {
+      font-family: 'Fredoka', sans-serif;
+      background-color: #5c94fc; /* Mario Sky Blue */
+      overflow-x: hidden;
+    }
+    
+    .font-retro {
+      font-family: 'VT323', monospace;
+    }
+
+    .retro-shadow {
+      box-shadow: 4px 4px 0px 0px rgba(0,0,0,0.8);
+    }
+    
+    .retro-border {
+      border: 4px solid #000;
+      border-radius: 12px;
+    }
+
+    .retro-block {
+      background-color: #c84c0c; /* Brick red */
+      background-image: linear-gradient(45deg, #a03c08 25%, transparent 25%, transparent 75%, #a03c08 75%, #a03c08), 
+                        linear-gradient(45deg, #a03c08 25%, transparent 25%, transparent 75%, #a03c08 75%, #a03c08);
+      background-size: 20px 20px;
+      background-position: 0 0, 10px 10px;
+    }
+
+    .cloud {
+      background: white;
+      border-radius: 50px;
+      position: absolute;
+      opacity: 0.8;
+      z-index: 0;
+    }
+    
+    .cloud::before, .cloud::after {
+      content: '';
+      position: absolute;
+      background: white;
+      border-radius: 50%;
+    }
+
+    .animate-float {
+      animation: float 3s ease-in-out infinite;
+    }
+
+    @keyframes float {
+      0% { transform: translateY(0px); }
+      50% { transform: translateY(-10px); }
+      100% { transform: translateY(0px); }
+    }
+  `;
+
+  // Componente de Botão Retrô
+  const RetroButton = ({ children, colorClass, onClick, active }) => (
+    <button 
+      onClick={onClick}
+      className={`
+        ${colorClass} retro-border retro-shadow font-bold text-lg px-6 py-3 text-white
+        transition-all transform hover:-translate-y-1 hover:brightness-110
+        active:translate-y-1 active:shadow-[0px_0px_0px_0px_rgba(0,0,0,1)]
+        flex items-center justify-center gap-2
+        ${active ? 'ring-4 ring-yellow-400 ring-offset-4 ring-offset-[#5c94fc]' : ''}
+      `}
+    >
+      {children}
     </button>
-</div>
+  );
 
-<div id="palavra" class="section hidden p-6 text-center">
-    <h2 class="text-[#E8B923] text-2xl font-bold mb-6">Trilha Missionária</h2>
-    <div class="bg-[#0A2540] border border-white/10 p-6 rounded-3xl shadow-2xl">
-        <p class="text-xl italic mb-4">"Pede-me, e eu te darei as nações por herança, e os fins da terra por tua possessão."</p>
-        <p class="font-bold text-[#15803D]">Salmos 2:8</p>
-        <hr class="my-6 border-white/10">
-        <p class="text-sm text-gray-400">Leitura sugerida para hoje:</p>
-        <p class="text-lg font-bold">Atos Capítulo 13</p>
-    </div>
-</div>
-        <a href="https://wa.me/5516997594551" class="block w-full bg-[#15803D] py-4 rounded-xl font-bold uppercase tracking-widest">
-            Compartilhar no WhatsApp
-        </a>
-    </div>
+  const worlds = [
+    { id: 1, title: "Mundo 1: A Casa da Família", desc: "Obediência aos Pais e Respeito", icon: <Users size={32} className="text-white" />, color: "bg-orange-500" },
+    { id: 2, title: "Mundo 2: O Deserto Farto", desc: "Generosidade e Partilha", icon: <Heart size={32} className="text-white" />, color: "bg-red-500" },
+    { id: 3, title: "Mundo 3: Os Passos do Mestre", desc: "O Caráter de Cristo e o Amor", icon: <Anchor size={32} className="text-white" />, color: "bg-blue-500" },
+    { id: 4, title: "Mundo 4: A Porta Estreita", desc: "A Salvação em Jesus", icon: <Shield size={32} className="text-white" />, color: "bg-emerald-500" },
+    { id: 5, title: "Mundo 5: O Reino Celeste", desc: "A Esperança da Vida Eterna", icon: <Crown size={32} className="text-white" />, color: "bg-yellow-500" },
+  ];
 
-    <div id="doar" class="section p-6 text-center">
-        <h2 class="text-[#E8B923] text-xl font-bold mb-4">Apoio Financeiro</h2>
-        <div class="bg-white/5 p-6 rounded-2xl">
-            <p class="mb-4">Sua semente ajuda a manter a base em Tacna.</p>
-            <p class="text-2xl font-mono bg-black/30 p-3 rounded">05475258856</p>
-            <button onclick="alert('Chave Copiada!')" class="mt-4 text-[#E8B923] font-bold underline">COPIAR CHAVE PIX</button>
+  const plans = [
+    { id: 'iniciantes', name: 'Iniciantes', price: 'Grátis', desc: 'Acesso aos Mundos 1 e 2. Ideal para os pequeninos começarem a jornada!', color: 'bg-green-500', icon: <Gamepad2 /> },
+    { id: 'avancados', name: 'Avançados', price: 'R$ 19/mês', desc: 'Acesso a todos os Mundos e minigames diários de memorização.', color: 'bg-blue-500', icon: <Star /> },
+    { id: 'titulares', name: 'Titulares', price: 'R$ 29/mês', desc: 'Acesso total, perfil para até 3 filhos e relatório de aprendizado para os pais.', color: 'bg-purple-600', icon: <Crown /> },
+  ];
+
+  return (
+    <div className="min-h-screen relative pb-20">
+      <style>{customStyles}</style>
+
+      {/* Nuvens decorativas de fundo */}
+      <div className="cloud w-32 h-10 top-10 left-[10%]"><div className="w-16 h-16 -top-8 left-4"></div><div className="w-12 h-12 -top-4 left-16"></div></div>
+      <div className="cloud w-40 h-12 top-24 right-[15%]"><div className="w-20 h-20 -top-10 left-6"></div><div className="w-16 h-16 -top-6 left-20"></div></div>
+      <div className="cloud w-24 h-8 top-40 left-[40%]"><div className="w-12 h-12 -top-6 left-2"></div><div className="w-10 h-10 -top-4 left-10"></div></div>
+
+      {/* Header */}
+      <header className="relative z-10 p-4 max-w-6xl mx-auto flex justify-between items-center bg-white/20 backdrop-blur-sm rounded-b-3xl retro-border border-t-0 mb-8">
+        <div className="flex items-center gap-3">
+          <div className="bg-yellow-400 p-2 rounded-full retro-border retro-shadow">
+            <Star className="text-yellow-900" fill="currentColor" size={28} />
+          </div>
+          <h1 className="font-retro text-3xl md:text-4xl text-white drop-shadow-[2px_2px_0px_rgba(0,0,0,1)] tracking-widest">
+            BIBLE<span className="text-yellow-300">BROS</span>
+          </h1>
         </div>
-    </div>
+        <nav className="hidden md:flex gap-4">
+          <button className="text-white font-bold hover:text-yellow-300 drop-shadow-md text-xl">Aventuras</button>
+          <button className="text-white font-bold hover:text-yellow-300 drop-shadow-md text-xl">Para Pais</button>
+          <button className="text-white font-bold hover:text-yellow-300 drop-shadow-md text-xl">Login</button>
+        </nav>
+      </header>
 
-    <div id="oracao" class="section p-6">
-        <h2 class="text-[#E8B923] text-xl font-bold mb-4 text-center">Motivos de Oração</h2>
-        <ul class="space-y-3">
-            <li class="bg-white/5 p-3 rounded">🙏 Pelas famílias Quéchua</li>
-            <li class="bg-white/5 p-3 rounded">🙏 Pela saúde dos missionários</li>
-            <li class="bg-white/5 p-3 rounded">🙏 Pela provisão da nova base</li>
-        </ul>
-    </div>
+      <main className="relative z-10 max-w-6xl mx-auto px-4">
+        
+        {/* Hero Section */}
+        <section className="text-center mb-16 pt-8">
+          <div className="inline-block animate-float mb-6">
+            <div className="retro-block retro-border retro-shadow w-24 h-24 flex items-center justify-center mx-auto mb-4">
+              <span className="font-retro text-5xl text-yellow-300 drop-shadow-[2px_2px_0px_rgba(0,0,0,1)]">?</span>
+            </div>
+          </div>
+          <h2 className="text-5xl md:text-7xl font-bold text-white drop-shadow-[4px_4px_0px_rgba(0,0,0,1)] mb-6 leading-tight">
+            Pule, corra e aprenda <br/>
+            <span className="text-yellow-300">a Palavra de Deus!</span>
+          </h2>
+          <p className="text-xl md:text-2xl text-white font-semibold drop-shadow-[2px_2px_0px_rgba(0,0,0,0.8)] max-w-2xl mx-auto mb-10">
+            Jogos divertidos para crianças de 3 a 12 anos. Aprenda sobre Salvação, Generosidade, Obediência e o amor de Cristo!
+          </p>
+          <div className="flex flex-col sm:flex-row justify-center gap-6">
+            <RetroButton colorClass="bg-[#E52521]"> {/* Mario Red */}
+              <Gamepad2 size={24} /> JOGAR AGORA
+            </RetroButton>
+            <RetroButton colorClass="bg-white !text-blue-900">
+              <BookOpen size={24} /> VER LIÇÕES
+            </RetroButton>
+          </div>
+        </section>
 
-    <div id="quiz" class="section p-6 text-center">
-        <h2 class="text-[#E8B923] text-xl font-bold mb-4">Desafio Missionário</h2>
+        {/* Seleção de Mundos (Ensinamentos) */}
+        <section className="mb-20">
+          <div className="flex items-center justify-center gap-4 mb-10">
+            <div className="h-1 bg-white flex-1 rounded-full opacity-50"></div>
+            <h3 className="font-retro text-4xl text-white drop-shadow-[3px_3px_0px_rgba(0,0,0,1)] text-center">
+              MUNDOS DA FÉ
+            </h3>
+            <div className="h-1 bg-white flex-1 rounded-full opacity-50"></div>
+          </div>
+          
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {worlds.map((world) => (
+              <div key={world.id} className="bg-white retro-border retro-shadow p-6 relative group overflow-hidden transform transition hover:-translate-y-2">
+                {/* Background decoration */}
+                <div className={`absolute -right-10 -top-10 w-32 h-32 rounded-full opacity-20 ${world.color}`}></div>
+                
+                <div className={`w-16 h-16 ${world.color} retro-border flex items-center justify-center mb-4 transform -rotate-3 group-hover:rotate-6 transition`}>
+                  {world.icon}
+                </div>
+                <h4 className="text-2xl font-bold text-gray-800 mb-2">{world.title}</h4>
+                <p className="text-gray-600 font-medium text-lg border-t-2 border-dashed border-gray-300 pt-3">
+                  Ensina sobre: <strong className="text-gray-800">{world.desc}</strong>
+                </p>
+              </div>
+            ))}
+            
+            {/* Bloco Surpresa / Em Breve */}
+            <div className="retro-block retro-border retro-shadow p-6 flex flex-col items-center justify-center text-center opacity-90">
+              <span className="font-retro text-6xl text-yellow-300 drop-shadow-[2px_2px_0px_rgba(0,0,0,1)] mb-2">?</span>
+              <h4 className="text-2xl font-bold text-white drop-shadow-[2px_2px_0px_rgba(0,0,0,1)]">Novas Fases</h4>
+              <p className="text-yellow-100 font-medium mt-2">Sempre em expansão!</p>
+            </div>
+          </div>
+        </section>
+
+        {/* Planos de Assinatura */}
+        <section className="mb-10 bg-[#74b4fc] p-8 md:p-12 retro-border retro-shadow rounded-3xl relative">
+           {/* Cano verde decorativo no canto */}
+          <div className="absolute -top-10 -right-4 w-20 h-16 bg-[#00a800] retro-border border-b-0 hidden md:block">
+            <div className="absolute -top-4 -left-2 w-24 h-6 bg-[#00a800] retro-border"></div>
+          </div>
+
+          <div className="text-center mb-12 relative z-10">
+            <h3 className="font-retro text-4xl md:text-5xl text-white drop-shadow-[3px_3px_0px_rgba(0,0,0,1)] mb-4">
+              ESCOLHA SEU JOGADOR
+            </h3>
+            <p className="text-xl text-white font-semibold drop-shadow-[1px_1px_0px_rgba(0,0,0,0.8)]">
+              Planos perfeitos para a sua família embarcar nessa aventura!
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto">
+            {plans.map((plan) => (
+              <div 
+                key={plan.id}
+                onClick={() => setSelectedPlan(plan.id)}
+                className={`
+                  bg-white retro-border retro-shadow rounded-2xl flex flex-col overflow-hidden cursor-pointer
+                  transition-all duration-200 transform hover:-translate-y-2
+                  ${selectedPlan === plan.id ? 'ring-8 ring-yellow-400 scale-105' : 'scale-100'}
+                `}
+              >
+                <div className={`${plan.color} p-6 text-center border-b-4 border-black relative`}>
+                  <div className="absolute -bottom-6 left-1/2 transform -translate-x-1/2 w-12 h-12 bg-white retro-border rounded-full flex items-center justify-center text-black">
+                    {plan.icon}
+                  </div>
+                  <h4 className="font-retro text-3xl text-white drop-shadow-[2px_2px_0px_rgba(0,0,0,1)]">{plan.name}</h4>
+                </div>
+                
+                <div className="p-8 pt-10 flex-1 flex flex-col">
+                  <div className="text-center mb-6">
+                    <span className="text-4xl font-bold text-gray-800">{plan.price}</span>
+                  </div>
+                  <p className="text-gray-600 font-medium text-lg mb-6 text-center flex-1">
+                    {plan.desc}
+                  </p>
+                  
+                  <RetroButton 
+                    colorClass={selectedPlan === plan.id ? "bg-yellow-400 !text-black" : "bg-gray-800"}
+                    onClick={(e) => { e.stopPropagation(); setSelectedPlan(plan.id); }}
+                  >
+                    {selectedPlan === plan.id ? 'SELECIONADO' : 'ESCOLHER'} 
+                    {selectedPlan === plan.id && <Check size={20} />}
+                  </RetroButton>
+                </div>
+              </div>
+            ))}
+          </div>
+        </section>
+
+      </main>
+
+      {/* Chão estilo Mario (Gramado e Terra) */}
+      <div className="fixed bottom-0 left-0 w-full h-16 z-0 flex flex-col pointer-events-none">
+        <div className="h-4 w-full bg-[#00a800] border-t-4 border-black"></div> {/* Grama */}
+        <div className="h-12 w-full bg-[#c84c0c] border-t-4 border-black" style={{
+          backgroundImage: 'linear-gradient(45deg, #a03c08 25%, transparent 25%, transparent 75%, #a03c08 75%, #a03c08), linear-gradient(45deg, #a03c08 25%, transparent 25%, transparent 75%, #a03c08 75%, #a03c08)',
+          backgroundSize: '20px 20px',
+          backgroundPosition: '0 0, 10px 10px'
+        }}></div> {/* Terra */}
+      </div>
+
+    </div>
+  );
+}
